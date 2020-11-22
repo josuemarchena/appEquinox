@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "10cb9c74-1e2a-425b-b439-377f9ed7671f",
-		"name": "API equinox",
+		"_postman_id": "576c0726-bd67-40ea-8189-981b3da17c62",
+		"name": "API Equinox full",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -72,6 +72,16 @@
 				{
 					"name": "Consultar un usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -89,58 +99,33 @@
 				{
 					"name": "Registrar usuario",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Usuario de prueba 1",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "1010@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "estado",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "rol_id",
-									"value": "1",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
 						"url": {
-							"raw": "{{base_url}}auth/register",
+							"raw": "{{base_url}}auth/register?name=prueba&email=prueba4@gmail.com&password=123456&rol_id=2",
 							"host": [
 								"{{base_url}}auth"
 							],
 							"path": [
 								"register"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "prueba"
+								},
+								{
+									"key": "email",
+									"value": "prueba4@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "123456"
+								},
+								{
+									"key": "rol_id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -149,40 +134,26 @@
 				{
 					"name": "Login",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "jm@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
 						"url": {
-							"raw": "{{base_url}}auth/login",
+							"raw": "{{base_url}}auth/login/?email=jm@gmail.com&password=123456",
 							"host": [
 								"{{base_url}}auth"
 							],
 							"path": [
-								"login"
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "jm@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "123456"
+								}
 							]
 						}
 					},
@@ -237,13 +208,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}personal/all/",
+							"raw": "{{base_url}}personal/all",
 							"host": [
 								"{{base_url}}personal"
 							],
 							"path": [
-								"all",
-								""
+								"all"
 							]
 						}
 					},
@@ -252,16 +222,6 @@
 				{
 					"name": "Consultar un personal",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -280,16 +240,6 @@
 				{
 					"name": "Index de personal",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -344,7 +294,7 @@
 								},
 								{
 									"key": "estado",
-									"value": "true",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -355,9 +305,71 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}store",
+							"raw": "{{base_url}}personal",
 							"host": [
-								"{{base_url}}store"
+								"{{base_url}}personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar personal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Nayely",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Sandi",
+									"type": "text"
+								},
+								{
+									"key": "correo",
+									"value": "nsm@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "60124569",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "vehiculo_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}personal/1",
+							"host": [
+								"{{base_url}}personal"
+							],
+							"path": [
+								"1"
 							]
 						}
 					},
@@ -678,7 +690,7 @@
 			"name": "Producto",
 			"item": [
 				{
-					"name": "Listar productos",
+					"name": "Lista Productos",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -705,34 +717,38 @@
 					"response": []
 				},
 				{
-					"name": "Consultar un producto",
+					"name": "Obtener Producto",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}producto/2",
+							"raw": "{{base_url}}producto/1",
 							"host": [
 								"{{base_url}}producto"
 							],
 							"path": [
-								"2"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Index de productos",
+					"name": "Index de Producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}producto",
+							"host": [
+								"{{base_url}}producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Producto",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -744,8 +760,53 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "prueba",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "descripcion prueba",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "marca_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "categoria_id[1]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "categoria_id[2]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "categoria_id[3]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "{{base_url}}producto/",
 							"host": [
@@ -753,6 +814,184 @@
 							],
 							"path": [
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "aaaaaaaaaaaaaaaaaaaaa",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "marca_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "categoria_id[0]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "categoria_id[1]",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}producto/5",
+							"host": [
+								"{{base_url}}producto"
+							],
+							"path": [
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Marca",
+			"item": [
+				{
+					"name": "Lista Marcas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}marca",
+							"host": [
+								"{{base_url}}marca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Marca",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}marca/1",
+							"host": [
+								"{{base_url}}marca"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Lista Categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}categoria",
+							"host": [
+								"{{base_url}}categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}categoria/1",
+							"host": [
+								"{{base_url}}categoria"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Provincia",
+			"item": [
+				{
+					"name": "Lista Provincias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}provincia",
+							"host": [
+								"{{base_url}}provincia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Provincia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}provincia/1",
+							"host": [
+								"{{base_url}}provincia"
+							],
+							"path": [
+								"1"
 							]
 						}
 					},

@@ -203,20 +203,24 @@ class ProductoController extends Controller
             }
 */
 
+
+
             //Actualizar producto
             if ($producto->update()) {
                 //Sincronice categorias
                 //Array de categorias
 
-
+                $categorias = $request->input('categoria_id');
                 //Solo es necesario con la imagen
-                if (!is_array($request->input('categoria_id'))) {
+                if (!is_array($categorias)) {
                     //Formato array relación muchos a muchos
-                    $categorias =
-                        explode(',', $request->input('categoria_id'));
+                    $categorias = explode(',', $request->input('categoria_id'));
+
+
                 }
-                if (!is_null($request->input('categoria_id'))) {
+                if (!is_null($categorias)) {
                     //Agregar categorias
+
                     $producto->categorias()->sync($categorias);
                 }
 
