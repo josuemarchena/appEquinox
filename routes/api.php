@@ -13,7 +13,9 @@ use App\Models\Provincia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DetallePedidoController;
 use App\Http\Controllers\PedidoController;
+use App\Models\DetallePedido;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +37,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'producto'], function ($router) {
         Route::get('', [ProductoController::class, 'index']);
-        Route::get('/all', [ProductoController::class, 'all'])->middleware(['auth:api']);
+        Route::get('/all', [ProductoController::class, 'all'])->middleware(['auth:api', 'scopes:Administrador']);
         Route::get('/{id}', [ProductoController::class, 'show']);
-        Route::post('', [ProductoController::class, 'store']);
+        Route::post('', [ProductoController::class, 'store'])->middleware(['auth:api', 'scopes:Administrador']);
         Route::patch(
             '/{id}',
             [
@@ -74,9 +76,9 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'personal'], function ($router) {
         Route::get('', [PersonalController::class, 'index']);
-        Route::get('/all', [PersonalController::class, 'all'])->middleware(['auth:api']);
+        Route::get('/all', [PersonalController::class, 'all'])->middleware(['auth:api', 'scopes:Administrador']);
         Route::get('/{id}', [PersonalController::class, 'show']);
-        Route::post('', [PersonalController::class, 'store'])->middleware(['auth:api']);
+        Route::post('', [PersonalController::class, 'store'])->middleware(['auth:api', 'scopes:Administrador']);
         Route::patch(
             '/{id}',
             [
@@ -91,9 +93,16 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'pedido'], function ($router) {
-        Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api']);
-        Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scopes:Administrador']);
-        Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api']);
+        Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::post('', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::post('/storeapi', [PedidoController::class, 'storeapi'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+    });
+
+    Route::group(['prefix' => 'detallepedido'], function ($router) {
+        Route::get('/{id}', [DetallePedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::post('', [DetallePedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
     });
     //->middleware(['auth:api','scopes:administrador'])
 

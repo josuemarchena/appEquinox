@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
@@ -64,6 +66,28 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         //
+        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'cedula_cliente' => 'required',
+                'nombre_completo_cliente' => 'required',
+                'telefono_cliente' => 'required',
+                'tipo_pedido' => 'required',
+                'fecha' => 'required',
+                'direccion' => 'required',
+                'subtotal' => 'required',
+                'impuesto' => 'required',
+                'envio' => 'required',
+                'total' => 'required',
+                'estado' => 'required',
+                'provincia_id' => 'required',
+                'personal_id' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
         DB::beginTransaction();
         try {
             $pedido = new Pedido();
@@ -79,6 +103,61 @@ class PedidoController extends Controller
                     'total' => $item['total']
                 ]);
             }
+            DB::commit();
+            $response = "¡Pedido creado correctamente!";
+            return response()->json($response, 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
+    public function storeapi(Request $request)
+    {
+        //
+        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'cedula_cliente' => 'required',
+                'nombre_completo_cliente' => 'required',
+                'telefono_cliente' => 'required',
+                'tipo_pedido' => 'required',
+                'fecha' => 'required',
+                'direccion' => 'required',
+                'subtotal' => 'required',
+                'impuesto' => 'required',
+                'envio' => 'required',
+                'total' => 'required',
+                'estado' => 'required',
+                'provincia_id' => 'required',
+                'personal_id' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+        DB::beginTransaction();
+        try {
+            $pedido = new Pedido();
+            $pedido->cedula_cliente = $request->input('cedula_cliente');
+            $pedido->nombre_completo_cliente = $request->input('nombre_completo_cliente');
+            $pedido->telefono_cliente = $request->input('telefono_cliente');
+            $pedido->tipo_pedido = $request->input('tipo_pedido');
+            $pedido->fecha = $request->input('fecha');
+            $pedido->direccion = $request->input('direccion');
+            $pedido->subtotal = $request->input('subtotal');
+            $pedido->impuesto = $request->input('impuesto');
+            $pedido->envio = $request->input('envio');
+            $pedido->total = $request->input('total');
+            $pedido->estado = $request->input('estado');
+            $pedido->provincia_id = $request->input('provincia_id');
+            $pedido->personal_id = $request->input('personal_id');
+
+            //$user= auth('api')->user();
+            //$pedido->user()->associate($user-id);
+            $pedido->save();
             DB::commit();
             $response = "¡Pedido creado correctamente!";
             return response()->json($response, 201);

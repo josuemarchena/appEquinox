@@ -6,6 +6,7 @@ use App\Models\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
 class PersonalController extends Controller
 {
     /**

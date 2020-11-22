@@ -85,6 +85,135 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Usuario de prueba 1",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "1010@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "rol_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/register",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "jm@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}auth/login",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}auth/logout",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -174,6 +303,65 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Crear personal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Nayely",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Sandi",
+									"type": "text"
+								},
+								{
+									"key": "correo",
+									"value": "nsm@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "60124569",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "vehiculo_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}store",
+							"host": [
+								"{{base_url}}store"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -243,124 +431,6 @@
 							],
 							"path": [
 								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Usuario",
-			"item": [
-				{
-					"name": "Registrar usuario",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Usuario de prueba 1",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "1010@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "estado",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "rol_id",
-									"value": "1",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}auth/register",
-							"host": [
-								"{{base_url}}auth"
-							],
-							"path": [
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "jm@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}auth/login",
-							"host": [
-								"{{base_url}}auth"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}auth/logout",
-							"host": [
-								"{{base_url}}auth"
-							],
-							"path": [
-								"logout"
 							]
 						}
 					},
@@ -450,6 +520,152 @@
 							],
 							"path": [
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "cedula_cliente",
+									"value": "201230852",
+									"type": "text"
+								},
+								{
+									"key": "nombre_completo_cliente",
+									"value": "Berlín Gonzáles",
+									"type": "text"
+								},
+								{
+									"key": "telefono_cliente",
+									"value": "25641023",
+									"type": "text"
+								},
+								{
+									"key": "tipo_pedido",
+									"value": "Pasa a retirar",
+									"type": "text"
+								},
+								{
+									"key": "fecha",
+									"value": "2020-10-21",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "Frente al Maxi Palí de Grecia",
+									"type": "text"
+								},
+								{
+									"key": "subtotal",
+									"value": "450000",
+									"type": "text"
+								},
+								{
+									"key": "impuesto",
+									"value": "58500",
+									"type": "text"
+								},
+								{
+									"key": "envio",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "total",
+									"value": "508500",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "pendiente",
+									"type": "text"
+								},
+								{
+									"key": "provincia_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "personal_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}pedido/storeapi",
+							"host": [
+								"{{base_url}}pedido"
+							],
+							"path": [
+								"storeapi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un detalle del pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "pedido_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "producto_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "cantidad",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "total",
+									"value": "450000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}detallepedido",
+							"host": [
+								"{{base_url}}detallepedido"
 							]
 						}
 					},
