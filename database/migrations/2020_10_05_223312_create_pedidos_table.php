@@ -21,13 +21,13 @@ class CreatePedidosTable extends Migration
             $table->string('tipo_pedido');
             $table->date('fecha');
             $table->string('direccion');
-            $table->decimal("subtotal", 10, 2);
-            $table->decimal("impuesto", 10, 2);
-            $table->decimal("envio", 10, 2);
-            $table->decimal("total", 10, 2);
+            $table->decimal("subtotal", 10, 2)->nullable();
+            $table->decimal("impuesto", 10, 2)->nullable();
+            $table->decimal("envio", 10, 2)->nullable();
+            $table->decimal("total", 10, 2)->nullable();
             $table->string('estado');
             $table->unsignedInteger('provincia_id');
-            $table->unsignedInteger('personal_id');
+            $table->unsignedInteger('personal_id')->nullable();
             $table->timestamps();
 
             $table->foreign('provincia_id')->references('id')->on('provincias');

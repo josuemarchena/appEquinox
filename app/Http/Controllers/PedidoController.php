@@ -76,13 +76,13 @@ class PedidoController extends Controller
                 'tipo_pedido' => 'required',
                 'fecha' => 'required',
                 'direccion' => 'required',
-                'subtotal' => 'required',
-                'impuesto' => 'required',
-                'envio' => 'required',
-                'total' => 'required',
-                'estado' => 'required',
+                //'subtotal' => 'required',
+                //'impuesto' => 'required',
+                //'envio' => 'required',
+                //'total' => 'required',
+                //'estado' => 'required',
                 'provincia_id' => 'required',
-                'personal_id' => 'required',
+                //'personal_id' => 'required',
             ]
         );
         if ($validator->fails()) {
@@ -91,18 +91,43 @@ class PedidoController extends Controller
         DB::beginTransaction();
         try {
             $pedido = new Pedido();
+            $pedido->cedula_cliente = $request->input('cedula_cliente');
+            $pedido->nombre_completo_cliente = $request->input('nombre_completo_cliente');
+            $pedido->telefono_cliente = $request->input('telefono_cliente');
+            $pedido->tipo_pedido = $request->input('tipo_pedido');
             $pedido->fecha = Carbon::parse(Carbon::now())->format('Y-m-d');
-            //$user= auth('api')->user();
-            //$pedido->user()->associate($user-id);
+            $pedido->direccion = $request->input('direccion');
+            $pedido->estado = "pendiente";
+            $pedido->provincia_id = $request->input('provincia_id');
             $pedido->save();
             //Detalles
+            $subtotal = 0;
+            $impuesto = 0;
+            $total = 0;
+            $envio = 0;
             $detalles = $request->input('detalles');
             foreach ($detalles as $item) {
                 $pedido->productos()->attach($item['idItem'], [
                     'cantidad' => $item['cantidad'],
                     'total' => $item['total']
                 ]);
+                $subtotal += $item['total'];
             }
+            if ($request->input('tipo_pedido') == "Express") {
+                if ($request - input('provincia_id') == 1 || $request - input('provincia_id') == 2 || $request - input('provincia_id') == 3 || $request - input('provincia_id') == 4) {
+                    $envio += 9000;
+                } else {
+                    $envio += 12000;
+                }
+            }
+            $impuesto += $subtotal * 0.13;
+            $total += $impuesto + $subtotal + $envio;
+            $pedido->subtotal = $subtotal;
+            $pedido->impuesto = $impuesto;
+            $pedido->envio = $envio;
+            $pedido->total = $total;
+
+            $pedido->envio = 9000;
             DB::commit();
             $response = "¡Pedido creado correctamente!";
             return response()->json($response, 201);
