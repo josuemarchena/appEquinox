@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+
 class PedidoController extends Controller
 {
     /**
@@ -76,12 +77,12 @@ class PedidoController extends Controller
                 'tipo_pedido' => 'required',
                 'fecha' => 'required',
                 'direccion' => 'required',
+                'provincia_id' => 'required',
                 //'subtotal' => 'required',
                 //'impuesto' => 'required',
                 //'envio' => 'required',
                 //'total' => 'required',
                 //'estado' => 'required',
-                'provincia_id' => 'required',
                 //'personal_id' => 'required',
             ]
         );

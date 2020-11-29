@@ -97,7 +97,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
         Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
         Route::post('', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
-        Route::post('/storeapi', [PedidoController::class, 'storeapi'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        //Route::post('/storeapi', [PedidoController::class, 'storeapi'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {
