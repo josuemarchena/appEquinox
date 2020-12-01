@@ -75,7 +75,7 @@ class PedidoController extends Controller
                 'nombre_completo_cliente' => 'required',
                 'telefono_cliente' => 'required',
                 'tipo_pedido' => 'required',
-                'fecha' => 'required',
+                //'fecha' => 'required',
                 'direccion' => 'required',
                 'provincia_id' => 'required',
                 //'subtotal' => 'required',
@@ -106,14 +106,30 @@ class PedidoController extends Controller
             $impuesto = 0;
             $total = 0;
             $envio = 0;
+
+            //return response()->json($request->input('detalles'), 422);
+
+
+
+            //echar un ojo aqui
             $detalles = $request->input('detalles');
+            if (!is_array($detalles)) {
+
+                $detalles = explode(',', $detalles);
+
+            }
             foreach ($detalles as $item) {
+
                 $pedido->productos()->attach($item['idItem'], [
                     'cantidad' => $item['cantidad'],
                     'total' => $item['total']
                 ]);
                 $subtotal += $item['total'];
+
             }
+
+
+
             if ($request->input('tipo_pedido') == "Express") {
                 if ($request - input('provincia_id') == 1 || $request - input('provincia_id') == 2 || $request - input('provincia_id') == 3 || $request - input('provincia_id') == 4) {
                     $envio += 9000;
