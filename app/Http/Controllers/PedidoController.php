@@ -111,13 +111,20 @@ class PedidoController extends Controller
 
 
 
-            //echar un ojo aqui
+
             $detalles = $request->input('detalles');
+
+
+            
             if (!is_array($detalles)) {
 
-                $detalles = explode(',', $detalles);
+                $detalles = explode(',', $detalles );
 
             }
+
+            //return response()->json($request->all(), 400);
+            //return response()->json(array($detalles['idItem']), 400);
+
             foreach ($detalles as $item) {
 
                 $pedido->productos()->attach($item['idItem'], [
@@ -127,6 +134,7 @@ class PedidoController extends Controller
                 $subtotal += $item['total'];
 
             }
+
 
 
 
