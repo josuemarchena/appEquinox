@@ -113,15 +113,6 @@ class PedidoController extends Controller
 
 
             $detalles = $request->input('detalles');
-
-
-            
-            if (!is_array($detalles)) {
-
-                $detalles = explode(',', $detalles );
-
-            }
-
             //return response()->json($request->all(), 400);
             //return response()->json(array($detalles['idItem']), 400);
 
@@ -129,22 +120,23 @@ class PedidoController extends Controller
 
                 $pedido->productos()->attach($item['idItem'], [
                     'cantidad' => $item['cantidad'],
-                    'total' => $item['total']
+                    'total' => $item['subtotal']
                 ]);
-                $subtotal += $item['total'];
+                $subtotal += $item['subtotal'];
 
             }
 
 
 
-
             if ($request->input('tipo_pedido') == "Express") {
-                if ($request - input('provincia_id') == 1 || $request - input('provincia_id') == 2 || $request - input('provincia_id') == 3 || $request - input('provincia_id') == 4) {
+                if ($request->input('provincia_id') == 1 || $request->input('provincia_id') == 2 || $request->inputinput('provincia_id') == 3 || $request->input('provincia_id') == 4) {
                     $envio += 9000;
                 } else {
                     $envio += 12000;
                 }
             }
+
+
             $impuesto += $subtotal * 0.13;
             $total += $impuesto + $subtotal + $envio;
             $pedido->subtotal = $subtotal;
@@ -152,7 +144,8 @@ class PedidoController extends Controller
             $pedido->envio = $envio;
             $pedido->total = $total;
 
-            $pedido->envio = 9000;
+            $pedido->update();
+
             DB::commit();
             $response = "¡Pedido creado correctamente!";
             return response()->json($response, 201);
