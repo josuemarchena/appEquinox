@@ -156,59 +156,43 @@ class PedidoController extends Controller
     }
 
 
-    public function storeapi(Request $request)
+    public function updatePersonalEstado(Request $request,  $id)
     {
-        //
-        //
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'cedula_cliente' => 'required',
-                'nombre_completo_cliente' => 'required',
-                'telefono_cliente' => 'required',
-                'tipo_pedido' => 'required',
-                'fecha' => 'required',
-                'direccion' => 'required',
-                'subtotal' => 'required',
-                'impuesto' => 'required',
-                'envio' => 'required',
-                'total' => 'required',
-                'estado' => 'required',
-                'provincia_id' => 'required',
-                'personal_id' => 'required',
-            ]
-        );
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), 422);
-        }
-        DB::beginTransaction();
+        //validar
+
+
+
         try {
-            $pedido = new Pedido();
+
+
+            $pedido = Pedido::find($id);
+            $pedido->personal_id = $request->input('personal_id');
+            $pedido->estado = $request->input('estado');
+
+            /*
             $pedido->cedula_cliente = $request->input('cedula_cliente');
             $pedido->nombre_completo_cliente = $request->input('nombre_completo_cliente');
             $pedido->telefono_cliente = $request->input('telefono_cliente');
-            $pedido->tipo_pedido = $request->input('tipo_pedido');
-            $pedido->fecha = $request->input('fecha');
+            //tipo pedido
             $pedido->direccion = $request->input('direccion');
-            $pedido->subtotal = $request->input('subtotal');
-            $pedido->impuesto = $request->input('impuesto');
-            $pedido->envio = $request->input('envio');
-            $pedido->total = $request->input('total');
-            $pedido->estado = $request->input('estado');
-            $pedido->provincia_id = $request->input('provincia_id');
-            $pedido->personal_id = $request->input('personal_id');
+            */
 
-            //$user= auth('api')->user();
-            //$pedido->user()->associate($user-id);
-            $pedido->save();
-            DB::commit();
-            $response = "¡Pedido creado correctamente!";
-            return response()->json($response, 201);
+            if($pedido->update()){
+                $response = 'Datos actualizados!';
+                return response()->json($response, 200);
+            }
+
+            $response = [
+                'msg' => 'Error durante la actualización'
+            ];
+            return response()->json($response, 404);
+
         } catch (\Exception $e) {
-            DB::rollback();
             return response()->json($e->getMessage(), 422);
         }
+
     }
+
 
     /**
      * Display the specified resource.
@@ -247,9 +231,12 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedido $pedido)
+    public function update(Request $request,  $id)
     {
         //
+
+
+
     }
 
     /**
