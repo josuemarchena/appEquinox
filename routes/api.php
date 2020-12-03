@@ -94,15 +94,21 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'pedido'], function ($router) {
         Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
-        Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
-        Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+        Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
         Route::post('', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
         Route::patch(
             '/{id}',
             [
-                PedidoController::class, 'updatePersonalEstado'
+                PedidoController::class, 'updateEstado'
             ]
-        )->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+        Route::patch(
+            '/{id}',
+            [
+                PedidoController::class, 'updatePersonal'
+            ]
+        )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {

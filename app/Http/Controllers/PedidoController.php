@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use SebastianBergmann\Environment\Console;
 
 class PedidoController extends Controller
 {
@@ -123,7 +123,6 @@ class PedidoController extends Controller
                     'total' => $item['subtotal']
                 ]);
                 $subtotal += $item['subtotal'];
-
             }
 
 
@@ -156,7 +155,29 @@ class PedidoController extends Controller
     }
 
 
-    public function updatePersonalEstado(Request $request,  $id)
+    public function updateEstado(Request $request,  $id)
+    {
+        //validar
+
+
+
+
+        try {
+
+
+            $pedido = Pedido::find($id);
+            $pedido->estado = "Listo para facturar";
+
+            if ($pedido->update()) {
+                $response = 'Pedido actualizado!';
+                return response()->json($response, 201);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    public function updatePersonal(Request $request,  $id)
     {
         //validar
 
@@ -167,7 +188,6 @@ class PedidoController extends Controller
 
             $pedido = Pedido::find($id);
             $pedido->personal_id = $request->input('personal_id');
-            $pedido->estado = $request->input('estado');
 
             /*
             $pedido->cedula_cliente = $request->input('cedula_cliente');
@@ -177,7 +197,7 @@ class PedidoController extends Controller
             $pedido->direccion = $request->input('direccion');
             */
 
-            if($pedido->update()){
+            if ($pedido->update()) {
                 $response = 'Datos actualizados!';
                 return response()->json($response, 200);
             }
@@ -186,11 +206,9 @@ class PedidoController extends Controller
                 'msg' => 'Error durante la actualización'
             ];
             return response()->json($response, 404);
-
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 422);
         }
-
     }
 
 
