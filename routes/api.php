@@ -103,12 +103,17 @@ Route::group(['prefix' => 'v1'], function () {
                 PedidoController::class, 'updateEstado'
             ]
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+
+
+        
+        /*
         Route::patch(
             '/{id}',
             [
                 PedidoController::class, 'updatePersonal'
             ]
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+        */
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {
