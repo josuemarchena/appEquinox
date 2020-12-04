@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'estado' => true
         ]);
         $objetoUsuario->save();
-        //2
+        //3
         $objetoUsuario = \App\Models\User::create([
             'name' => 'Saturnino Hidalgo',
             'email' => 'sh@gmail.com',

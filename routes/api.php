@@ -105,15 +105,14 @@ Route::group(['prefix' => 'v1'], function () {
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
 
 
-        
-        /*
+
+
         Route::patch(
-            '/{id}',
+            'updatePersonal/{id}',
             [
                 PedidoController::class, 'updatePersonal'
             ]
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
-        */
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {
