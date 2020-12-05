@@ -18,6 +18,24 @@ class FacturaController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        //
+        try {
+            //listar
+            $facturas = Factura::orderBy('id', 'asc')->with(["user", "pedidos"])->get();
+            $response = $facturas;
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

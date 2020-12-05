@@ -104,15 +104,18 @@ Route::group(['prefix' => 'v1'], function () {
             ]
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
 
-
-
-
         Route::patch(
             'updatePersonal/{id}',
             [
                 PedidoController::class, 'updatePersonal'
             ]
         )->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+    });
+
+    Route::group(['prefix' => 'factura'], function ($router) {
+        Route::get('', [FacturaController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::get('/all', [FacturaController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+        Route::post('', [FacturaController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {
