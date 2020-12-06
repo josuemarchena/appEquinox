@@ -48,6 +48,20 @@ class PedidoController extends Controller
         }
     }
 
+    public function alllisto()
+    {
+        //
+        try {
+            //listar
+            $variable = 'Listo para facturar';
+            $pedidos = Pedido::where('estado', 'Listo para facturar')->with(['provincia', 'personal', 'productos'])->orderBy('id', "asc")->get();
+            $response = $pedidos;
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

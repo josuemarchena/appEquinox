@@ -95,6 +95,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'pedido'], function ($router) {
         Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
         Route::get('/all', [PedidoController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
+        Route::get('/alllisto', [PedidoController::class, 'alllisto'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
         Route::get('/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
         Route::post('', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
         Route::patch(
