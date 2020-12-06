@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Factura;
+use App\Models\Pedido;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FacturaController extends Controller
 {
@@ -27,7 +30,10 @@ class FacturaController extends Controller
         //
         try {
             //listar
-            $facturas = Factura::orderBy('id', 'asc')->with(["user", "pedidos"])->get();
+
+            //no existe pedido.factura_id por eso no se pueden llamar los pedidos con dicho id de factura
+            //$facturas = Factura::orderBy('id', 'asc')->with(["user", "pedidos"])->get();
+            $facturas = Factura::orderBy('id', 'asc')->with(["user"])->get();
             $response = $facturas;
             return response()->json($response, 200);
         } catch (\Exception $e) {
@@ -54,6 +60,46 @@ class FacturaController extends Controller
     public function store(Request $request)
     {
         //
+
+        //validar
+        $validator = Validator::make(
+                $request->all(),
+                [
+                    'pedido_id' => 'required',
+
+                ]
+            );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+        try {
+
+            $pedido = Pedido::find($request->input('pedido_id'));
+
+            $factura = new Factura();
+            $factura->fecha = Carbon::parse(Carbon::now())->format('Y-m-d');
+            $factura->pedido_id = $request->input('pedido_id');
+            $factura->user_id = $request->input('user_id');
+
+            $factura->total = $pedido->total;
+            //$factura->pedidos()->attach($request->input('pedido_id'));
+
+
+
+            if ($factura->save()) {
+                $pedido->estado='facturado';
+                $pedido->update();
+                $response = 'Factura creada!';
+                return response()->json($response, 201);
+            } else {
+                $response = [
+                    'msg' => 'Error durante la creación'
+                ];
+                return response()->json($response, 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

@@ -18,7 +18,7 @@ class CreateFacturasTable extends Migration
             $table->unsignedInteger('pedido_id');
             $table->unsignedInteger('user_id');
             $table->date('fecha');
-            $table->decimal("total", 8, 2);
+            $table->decimal("total", 12, 2);
             $table->timestamps();
 
             $table->foreign('pedido_id')->references('id')->on('pedidos');
