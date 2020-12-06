@@ -128,7 +128,7 @@ class PedidoController extends Controller
 
 
             if ($request->input('tipo_pedido') == "Express") {
-                if ($request->input('provincia_id') == 1 || $request->input('provincia_id') == 2 || $request->inputinput('provincia_id') == 3 || $request->input('provincia_id') == 4) {
+                if ($request->input('provincia_id') == 1 || $request->input('provincia_id') == 2 || $request->input('provincia_id') == 3 || $request->input('provincia_id') == 4) {
                     $envio += 9000;
                 } else {
                     $envio += 12000;
