@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "576c0726-bd67-40ea-8189-981b3da17c62",
+		"_postman_id": "92fd7a3d-95c7-4457-9365-30ef82eeea28",
 		"name": "API Equinox full",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -682,6 +682,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Listar pedidos listos para facturar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}pedido/alllisto",
+							"host": [
+								"{{base_url}}pedido"
+							],
+							"path": [
+								"alllisto"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -992,6 +1019,91 @@
 							],
 							"path": [
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Factura",
+			"item": [
+				{
+					"name": "Crear factura",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "pedido_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "fecha",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "total",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}factura/",
+							"host": [
+								"{{base_url}}factura"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar facturas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}factura/all",
+							"host": [
+								"{{base_url}}factura"
+							],
+							"path": [
+								"all"
 							]
 						}
 					},

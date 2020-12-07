@@ -115,8 +115,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'factura'], function ($router) {
         Route::get('', [FacturaController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
-        Route::get('/all', [FacturaController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor,Bodega']);
-        Route::post('', [FacturaController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::get('/all', [FacturaController::class, 'all'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
+        Route::post('', [FacturaController::class, 'store'])->middleware(['auth:api', 'scope:Vendedor']);
     });
 
     Route::group(['prefix' => 'detallepedido'], function ($router) {
